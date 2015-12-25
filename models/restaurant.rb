@@ -15,4 +15,8 @@ class Restaurant < ActiveRecord::Base
     )
   end
 
+  def display_name
+    "#{self.emoji} #{self.name.titleize}"
+  end
+
 end

@@ -31,9 +31,9 @@ def go(rest, params)
                                                                                params['channel_id'])
   if decl.new_record?
     decl.save!
-    respond_in_channel "#{decl.user_name} wants to go to #{decl.restaurant.name}! Join them by entering `/um go #{decl.restaurant.name}`, or show an interest in a different place by typing `/um go [other-place]`."
+    respond_in_channel "#{decl.user_name} wants to go to #{decl.restaurant.display_name}! Join them by entering `/um go #{decl.restaurant.display_name}`, or show an interest in a different place by typing `/um go [other-place]`."
   else
-    respond "You have already shown interest in going to #{decl.restaurant.name}. You can show interest in a differnt place by typing `/um go [other-place]`."
+    respond "You have already shown interest in going to #{decl.restaurant.display_name}. You can show interest in a differnt place by typing `/um go [other-place]`."
   end
 end
 
@@ -53,9 +53,9 @@ end
 def emoji(rest, emoji)
   rest = Restaurant.in_team(params['team_id']).by_input(rest).first
   rest.emoji = emoji
-  res.save
+  res.save!
 
-  respond "#{rest.name} now has the emoji #{rest.emoji}"
+  respond "#{rest.name}'s emoji is now #{rest.emoji}"
 end
 
 def respond(text)
