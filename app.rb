@@ -53,9 +53,9 @@ end
 def emoji(rest, emoji, params)
   rest = Restaurant.in_team(params['team_id']).by_input(rest)
   rest.emoji = emoji
-  res.save!
+  rest.save!
 
-  respond "#{rest.name}'s emoji is now #{rest.emoji}"
+  respond "#{rest.name}'s emoji is now #{rest.emoji}!"
 end
 
 def respond(text)
