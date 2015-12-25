@@ -51,7 +51,7 @@ def help
 end
 
 def emoji(rest, emoji, params)
-  rest = Restaurant.in_team(params['team_id']).by_input(rest).first
+  rest = Restaurant.in_team(params['team_id']).by_input(rest)
   rest.emoji = emoji
   res.save!
 
