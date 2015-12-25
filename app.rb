@@ -41,7 +41,7 @@ def list(rest, params)
   # return list of declarations for today
   lines = Declaration.in_team(params['team_id']).for_today.group_by(&:restaurant).map do |rest, decls|
     users = decls.map(&:user_name)
-    "#{rest.name}: #{users.join(', ')}"
+    "#{rest.display_name}: #{users.join(', ')}"
   end
   respond "*For #{DateTime.now.strftime("%A, %B %-d, %Y")}, people want to go to:*\n" + lines.join("\n")
 end
