@@ -31,10 +31,9 @@ def go(rest, params)
                                                                                params['channel_id'])
   if decl.new_record?
     decl.save!
-    respond "You have declared interest in going to #{decl.restaurant.name}. You can show interest in another restaurants by typing `/um go [other-restaurant]`."
-    respond_in_channel "#{decl.user_name} wants to go to #{decl.restaurant.name}! Join them by entering `/um go #{decl.restaurant.name}`, or show an interest in another restaurant by typing `/um go [restaurant]`."
+    respond_in_channel "#{decl.user_name} wants to go to #{decl.restaurant.name}! Join them by entering `/um go #{decl.restaurant.name}`, or show an interest in a different place by typing `/um go [other-place]`."
   else
-    respond "You have already shown interest in going to #{decl.restaurant.name}. You can show interest in another restaurants by typing `/um go [other-restaurant]`."
+    respond "You have already shown interest in going to #{decl.restaurant.name}. You can show interest in a differnt place by typing `/um go [other-place]`."
   end
 end
 
