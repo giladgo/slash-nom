@@ -70,12 +70,15 @@ def help_text
 <<-HELP
 `/um` is a slash command to help people decide where to go to lunch.
   Here are the available commands:
-  `/um go [restaurant]`
+  `/um go [place]`
     Declare an interest in going to a place to eat.
     example: /um Rustico
   `/um list`
     Show where people want to go.
     example: /um list
+  `/um emoji [place] [emoji]`
+    Associate a place with an emoji.
+    example: /um emoji McDonalds :hamburger:
   `/um help`
     Show this help message.
     example: /um help
