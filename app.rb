@@ -43,7 +43,7 @@ def list(rest, params)
     users = decls.map(&:user_name)
     "#{rest.name}: #{users.join(', ')}"
   end
-  respond lines.join("\n")
+  respond "*For #{DateTime.now.strftime("%A, %B %-d, %Y")}, people want to go to:*\n" + lines.join("\n")
 end
 
 def help
