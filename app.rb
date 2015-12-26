@@ -2,7 +2,6 @@ require 'sinatra'
 require 'sinatra/activerecord'
 require './models/restaurant'
 require './models/declaration'
-require './config/environments'
 require 'awesome_print'
 set :bind, '0.0.0.0'
 
