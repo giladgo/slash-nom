@@ -33,7 +33,7 @@ def go(rest, params)
     decl.save!
     respond_in_channel "#{decl.user_name} wants to go to #{decl.restaurant.display_name}! Join them by entering `/um go #{decl.restaurant.display_name}`, or show an interest in a different place by typing `/um go [other-place]`."
   else
-    respond "You have already shown interest in going to #{decl.restaurant.display_name}. You can show interest in a differnt place by typing `/um go [other-place]`."
+    respond "You have already shown interest in going to #{decl.restaurant.display_name} today. You can show interest in a differnt place by typing `/um go [other-place]`."
   end
 end
 

@@ -8,7 +8,7 @@ class Restaurant < ActiveRecord::Base
   end
 
   def init_declaration(user_id, user_name, channel_id)
-    declarations.create_with(user_name: user_name).find_or_initialize_by(
+    declarations.for_today.create_with(user_name: user_name).find_or_initialize_by(
       user_id:    user_id,
       channel_id: channel_id,
       team_id:    self.team_id
@@ -16,7 +16,7 @@ class Restaurant < ActiveRecord::Base
   end
 
   def display_name
-    "#{self.emoji} #{self.name.titleize}"
+    self.emoji.present? ? "#{self.emoji} #{self.name.titleize}" : self.name.titleize
   end
 
 end
