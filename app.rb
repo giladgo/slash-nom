@@ -10,11 +10,11 @@ post '/um' do
   ap params
   content_type :json
   if params['text'].present?
-    args = params['text'].split
+    args = params['text'].split(' ', 2)
     response = case args.first
     when 'go', 'g' then go(args[1], params)
     when 'list', 'l' then list(args[1], params)
-    when 'emoji', 'e' then emoji(args[1], args[2], params)
+    when 'emoji', 'e' then emoji(args[1], params)
     else help
     end
     response.to_json
@@ -50,12 +50,14 @@ def help
   respond help_text
 end
 
-def emoji(rest, emoji, params)
-  rest = Restaurant.in_team(params['team_id']).by_input(rest)
-  rest.emoji = emoji
+def emoji(args, params)
+  ap args
+  args = args.split(' ', 2)
+  rest = Restaurant.in_team(params['team_id']).by_input(args[1])
+  rest.emoji = args[0]
   rest.save!
 
-  respond "#{rest.name}'s emoji is now #{rest.emoji}!"
+  respond "#{rest.name.titleize}'s emoji is now #{rest.emoji}!"
 end
 
 def respond(text)
@@ -76,9 +78,9 @@ def help_text
   `/um list`
     Show where people want to go.
     example: /um list
-  `/um emoji [place] [emoji]`
+  `/um emoji [emoji] [place]`
     Associate a place with an emoji.
-    example: /um emoji McDonalds :hamburger:
+    example: /um emoji :hamburger: McDonalds
   `/um help`
     Show this help message.
     example: /um help
