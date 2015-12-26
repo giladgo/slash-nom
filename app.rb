@@ -7,7 +7,6 @@ require 'awesome_print'
 set :bind, '0.0.0.0'
 
 post '/um' do
-  ap params
   content_type :json
   if params['text'].present?
     args = params['text'].split(' ', 2)
