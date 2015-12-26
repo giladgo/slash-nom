@@ -1,7 +1,20 @@
-development:
+default: &default
   adapter: postgresql
-  database: development
-  host: localhost
+  timeout: 5000
+  pool: 5
+
+development:
+  <<: *default
+  database: slashum_development
+
+test:
+  <<: *default
+  database: slashum_test
 
 production:
-  adapter: postgresql
+  <<: *default
+  host: db
+  port: 5432
+  database: slashum_production
+  username: postgres
+  password: <%= ENV["DB_ENV_POSTGRES_PASSWORD"] %>

@@ -4,7 +4,7 @@ require './models/restaurant'
 require './models/declaration'
 require './config/environments'
 require 'awesome_print'
-set :port, 31385
+set :bind, '0.0.0.0'
 
 post '/um' do
   ap params
