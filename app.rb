@@ -4,6 +4,7 @@ require './models/restaurant'
 require './models/declaration'
 require 'awesome_print'
 set :bind, '0.0.0.0'
+set :server, "thin"
 
 post '/um' do
   content_type :json
