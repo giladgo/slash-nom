@@ -9,7 +9,6 @@ set :server, "thin"
 after do
   ActiveRecord::Base.connection.close
 end
-
 server = SlashUmServer.new
 
 post '/um' do

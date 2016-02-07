@@ -3,6 +3,11 @@ require 'sinatra/activerecord'
 
 require './models/restaurant'
 require './models/declaration'
+require './models/pinned_message'
+
+# TODO:
+# 1. Fix the emojis
+# 2. Fix the team_id/channel_id thing once and for all
 
 class SlashUmServer
 
@@ -21,28 +26,28 @@ class SlashUmServer
   end
 
   def todays_pinned_message(channel_id)
-    @slack_client.pins_list(channel: 'channel_id').items.find do |pin|
-      # TODO: add condition for today
-      pin.type == 'message' and pin.message.user == bot_user_id
-    end
+    PinnedMessage.for_today.first
   end
 
-  def declaration_lines
-    lines = Declaration.in_team(params['team_id']).for_today.group_by(&:restaurant).map do |rest, decls|
+  def declaration_lines(team_id)
+    Declaration.in_team(team_id).for_today.group_by(&:restaurant).map do |rest, decls|
       users = decls.map(&:user_name)
       "#{rest.display_name}: #{users.join(', ')}"
     end
   end
 
-  def pinned_message_text(channel_id)
+  def pinned_message_text(team_id)
+    "People want to go today to:\n" + declaration_lines(team_id).join("\n")
   end
 
-  def set_pinned_message(channel_id)
+  def set_pinned_message(team_id, channel_id)
     pinned_msg = todays_pinned_message(channel_id)
     if pinned_msg.present?
-      @slack_client.chat_update(ts: pinned_msg.ts, channel: channel_id, text: pinned_message_text(channel_id))
+      @slack_client.chat_update(ts: pinned_msg.message_id, channel: channel_id, text: pinned_message_text(team_id))
     else
-      @slack_client.chat_postMessage(channel: channel_id, text: pinned_message_text(channel_id))
+      response = @slack_client.chat_postMessage(channel: channel_id, text: pinned_message_text(team_id), as_user: true)
+      @slack_client.pins_add(channel: channel_id, timestamp: response["ts"])
+      PinnedMessage.create(message_date: Date.today, message_id: response["ts"])
     end
   end
 
@@ -53,8 +58,8 @@ class SlashUmServer
                                                                                  params['channel_id'])
     if decl.new_record?
       decl.save!
-      respond "You wants to go to #{decl.restaurant.display_name}!"
-      set_pinned_message(params['channel_id'])
+      set_pinned_message(params['team_id'], params['channel_id'])
+      respond "You want to go to #{decl.restaurant.display_name}!"
     else
       respond "You have already shown interest in going to #{decl.restaurant.display_name} today. You can show interest in a differnt place by typing `/um go [other-place]`."
     end
@@ -64,7 +69,7 @@ class SlashUmServer
     # return list of declarations for today
     @slack_client.chat_postMessage(channel: '#slash-um-test', text: 'Hello World', as_user: true)
 
-    lines = declaration_lines
+    lines = declaration_lines(params['team_id'])
     if lines.empty?
       respond "*Nobody wants to go anywhere today (#{DateTime.now.strftime("%A, %B %-d, %Y")}), be the first to show an interest in a place by entering `/um go [place-name]`!*"
     else
