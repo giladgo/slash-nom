@@ -6,6 +6,11 @@ require 'awesome_print'
 set :bind, '0.0.0.0'
 set :server, "thin"
 
+# prevent conneciton leaks
+after do
+  ActiveRecord::Base.connection.close
+end
+
 post '/um' do
   content_type :json
   if params['text'].present?
