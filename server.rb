@@ -7,7 +7,6 @@ require './models/pinned_message'
 
 # TODO:
 # 1. Fix the emojis
-# 2. Fix the team_id/channel_id thing once and for all
 
 class SlashUmServer
 
