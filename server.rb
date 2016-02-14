@@ -29,23 +29,23 @@ class SlashUmServer
     PinnedMessage.for_today.first
   end
 
-  def declaration_lines(team_id)
-    Declaration.in_team(team_id).for_today.group_by(&:restaurant).map do |rest, decls|
-      users = decls.map(&:user_name)
+  def declaration_lines(team_id, channel_id)
+		Restaurant.joins(:declarations).merge(Declaration.in_channel(team_id, channel_id)).merge(Declaration.for_today).group("restaurants.id").order("count(declarations.restaurant_id) desc").map do |rest|
+      users = rest.declarations.for_today.in_channel(team_id, channel_id).map(&:user_name)
       "#{rest.display_name}: #{users.join(', ')}"
     end
   end
 
-  def pinned_message_text(team_id)
-    "People want to go today to:\n" + declaration_lines(team_id).join("\n")
+  def pinned_message_text(team_id, channel_id)
+    "People want to go today to:\n" + declaration_lines(team_id, channel_id).join("\n")
   end
 
   def set_pinned_message(team_id, channel_id)
     pinned_msg = todays_pinned_message(channel_id)
     if pinned_msg.present?
-      @slack_client.chat_update(ts: pinned_msg.message_id, channel: channel_id, text: pinned_message_text(team_id))
+      @slack_client.chat_update(ts: pinned_msg.message_id, channel: channel_id, text: pinned_message_text(team_id, channel_id))
     else
-      response = @slack_client.chat_postMessage(channel: channel_id, text: pinned_message_text(team_id), as_user: true)
+      response = @slack_client.chat_postMessage(channel: channel_id, text: pinned_message_text(team_id, channel_id), as_user: true)
       @slack_client.pins_add(channel: channel_id, timestamp: response["ts"])
       PinnedMessage.create(message_date: Date.today, message_id: response["ts"])
     end
@@ -66,10 +66,7 @@ class SlashUmServer
   end
 
   def list(rest, params)
-    # return list of declarations for today
-    @slack_client.chat_postMessage(channel: '#slash-um-test', text: 'Hello World', as_user: true)
-
-    lines = declaration_lines(params['team_id'])
+    lines = declaration_lines(params['team_id'], params['channel_id'])
     if lines.empty?
       respond "*Nobody wants to go anywhere today (#{DateTime.now.strftime("%A, %B %-d, %Y")}), be the first to show an interest in a place by entering `/um go [place-name]`!*"
     else
