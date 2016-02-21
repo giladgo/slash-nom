@@ -6,8 +6,7 @@ class Restaurant < ActiveRecord::Base
   scope :in_team, ->(team) { where(team_id: team) }
 
   def self.by_input(input)
-		puts "#{Utils.emoji?(input)} #{self.by_emoji(input).name} #{self.by_name(input).name}"
-    Utils.emoji?(input) ? self.by_emoji(input) : self.by_name(input)
+		Utils.emoji?(input) ? self.by_emoji(input) : self.by_name(input)
   end
 
   def self.by_name(input)
@@ -15,8 +14,8 @@ class Restaurant < ActiveRecord::Base
   end
 
   def self.by_emoji(emoji)
-		puts "unemojify: #{emoji} #{Utils.unemojify(emoji)}"
-    self.first_or_create(emoji: emoji, name: Utils.unemojify(emoji))
+    self.where('lower(emoji) = :emoji and lower(name) = :name',
+			{ emoji: emoji.downcase, name: Utils.unemojify(emoji).downcase }).first_or_create
   end
 
   def init_declaration(user_id, user_name, channel_id)
