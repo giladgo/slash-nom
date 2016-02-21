@@ -15,6 +15,7 @@ class Restaurant < ActiveRecord::Base
   end
 
   def self.by_emoji(emoji)
+		puts "unemojify: #{emoji} #{Utils.unemojify(emoji)}"
     self.first_or_create(emoji: emoji, name: Utils.unemojify(emoji))
   end
 
