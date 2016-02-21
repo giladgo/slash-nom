@@ -15,7 +15,9 @@ class Restaurant < ActiveRecord::Base
 
   def self.by_emoji(emoji)
     self.where('lower(emoji) = :emoji and lower(name) = :name',
-			{ emoji: emoji.downcase, name: Utils.unemojify(emoji).downcase }).first_or_create
+			{ emoji: emoji.downcase, name: Utils.unemojify(emoji).downcase }).first_or_create({
+				emoji: emoji, name: Utils.unemojify(emoji)
+			})
   end
 
   def init_declaration(user_id, user_name, channel_id)
