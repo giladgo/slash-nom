@@ -6,6 +6,7 @@ class Restaurant < ActiveRecord::Base
   scope :in_team, ->(team) { where(team_id: team) }
 
   def self.by_input(input)
+		puts "#{Utils.emoji?(input)} #{self.by_emoji(input)} #{self.by_name(input)}"
     Utils.emoji?(input) ? self.by_emoji(input) : self.by_name(input)
   end
 
