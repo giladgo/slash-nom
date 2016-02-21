@@ -19,7 +19,7 @@ post '/um' do
     when 'go', 'g' then server.go(args[1], params)
     when 'list', 'l' then server.list(args[1], params)
     when 'emoji', 'e' then server.emoji(args[1], params)
-    else help
+    else server.help
     end
     response.to_json
   else
