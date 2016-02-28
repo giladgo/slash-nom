@@ -28,6 +28,10 @@ class Restaurant < ActiveRecord::Base
     )
   end
 
+	def declaration_for_user(user_id, channel_id)
+		declarations.in_channel(self.team_id, channel_id).for_today.where(user_id: user_id).first
+	end
+
   def display_name
     title_name = self.name.present? ? self.name.titleize : ''
     self.emoji.present? ? "#{self.emoji} #{title_name}" : title_name

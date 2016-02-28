@@ -17,6 +17,7 @@ post '/um' do
     args = params['text'].split(' ', 2)
     response = case args.first
     when 'go', 'g' then server.go(args[1], params)
+    when 'ungo', 'ug' then server.ungo(args[1], params)
     when 'list', 'l' then server.list(args[1], params)
     when 'emoji', 'e' then server.emoji(args[1], params)
     else server.help

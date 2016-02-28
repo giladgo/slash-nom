@@ -25,12 +25,12 @@ class SlashUmServer
   end
 
   def todays_pinned_message(channel_id)
-		# TODO this needs to be by channel_id
+    # TODO this needs to be by channel_id
     PinnedMessage.for_today.first
   end
 
   def declaration_lines(team_id, channel_id)
-		Restaurant.joins(:declarations).merge(Declaration.in_channel(team_id, channel_id)).merge(Declaration.for_today).group("restaurants.id").order("count(declarations.restaurant_id) desc").map do |rest|
+    Restaurant.joins(:declarations).merge(Declaration.in_channel(team_id, channel_id)).merge(Declaration.for_today).group("restaurants.id").order("count(declarations.restaurant_id) desc").map do |rest|
       users = rest.declarations.for_today.in_channel(team_id, channel_id).map(&:user_name)
       "#{rest.display_name}: #{users.join(', ')}"
     end
@@ -63,6 +63,18 @@ class SlashUmServer
     else
       respond "You have already shown interest in going to #{decl.restaurant.display_name} today. You can show interest in a differnt place by typing `/um go [other-place]`."
     end
+  end
+
+  def ungo(rest, params)
+    decl = Restaurant.in_team(params['team_id']).by_input(rest).declaration_for_user(params['user_id'], params['channel_id'])
+
+    if decl.present?
+      decl.destroy
+      set_pinned_message(params['team_id'], params['channel_id'])
+      respond "You don't want to got to #{decl.restaurant.display_name}."
+    else
+      respond "You can ungo to a place you didn't delcare for"
+		end
   end
 
   def list(rest, params)
