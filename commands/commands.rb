@@ -1,0 +1,5 @@
+require './commands/go.rb'
+require './commands/emoji.rb'
+require './commands/help.rb'
+require './commands/list.rb'
+require './commands/ungo.rb'

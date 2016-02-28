@@ -5,8 +5,8 @@ require './models/restaurant'
 require './models/declaration'
 require './models/pinned_message'
 
-# TODO:
-# 1. Fix the emojis
+require './commands/commands.rb'
+
 
 class SlashUmServer
 
@@ -51,55 +51,6 @@ class SlashUmServer
     end
   end
 
-  def go(rest, params)
-    # Add a declaration
-    decl = Restaurant.in_team(params['team_id']).by_input(rest).init_declaration(params['user_id'],
-                                                                                 params['user_name'],
-                                                                                 params['channel_id'])
-    if decl.new_record?
-      decl.save!
-      set_pinned_message(params['team_id'], params['channel_id'])
-      respond "You want to go to #{decl.restaurant.display_name}!"
-    else
-      respond "You have already shown interest in going to #{decl.restaurant.display_name} today. You can show interest in a differnt place by typing `/um go [other-place]`."
-    end
-  end
-
-  def ungo(rest, params)
-    decl = Restaurant.in_team(params['team_id']).by_input(rest).declaration_for_user(params['user_id'], params['channel_id'])
-
-    if decl.present?
-      decl.destroy
-      set_pinned_message(params['team_id'], params['channel_id'])
-      respond "You don't want to got to #{decl.restaurant.display_name}."
-    else
-      respond "You can ungo to a place you didn't delcare for"
-    end
-  end
-
-  def list(rest, params)
-    lines = declaration_lines(params['team_id'], params['channel_id'])
-    if lines.empty?
-      respond "*Nobody wants to go anywhere today (#{DateTime.now.strftime("%A, %B %-d, %Y")}), be the first to show an interest in a place by entering `/um go [place-name]`!*"
-    else
-      respond "*For #{DateTime.now.strftime("%A, %B %-d, %Y")}, people want to go to:*\n" + lines.join("\n")
-    end
-  end
-
-  def help
-    respond help_text
-  end
-
-  def emoji(args, params)
-    ap args
-    args = args.split(' ', 2)
-    rest = Restaurant.in_team(params['team_id']).by_input(args[1])
-    rest.emoji = args[0]
-    rest.save!
-
-    respond "#{rest.name.titleize}'s emoji is now #{rest.emoji}!"
-  end
-
   def respond(text)
     {text: text}
   end
@@ -108,27 +59,5 @@ class SlashUmServer
     {response_type: 'in_channel', text: text}
   end
 
-  def help_text
-  <<-HELP
-  `/um` is a slash command to help people decide where to go to lunch.
-    Here are the available commands:
-    `/um go [place]`
-      Declare an interest in going to a place to eat.
-      example: /um Rustico
-    `/um ungo [place]`
-      Regret the interest in going to a place.
-      example /um ungo Rustico
-    `/um list`
-      Show where people want to go.
-      example: /um list
-    `/um emoji [emoji] [place]`
-      Associate a place with an emoji.
-      example: /um emoji :hamburger: McDonalds
-    `/um help`
-      Show this help message.
-      example: /um help
-  Enjoy!
-  HELP
-  end
 
 end
