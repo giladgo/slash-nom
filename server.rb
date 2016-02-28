@@ -74,7 +74,7 @@ class SlashUmServer
       respond "You don't want to got to #{decl.restaurant.display_name}."
     else
       respond "You can ungo to a place you didn't delcare for"
-		end
+    end
   end
 
   def list(rest, params)
@@ -115,6 +115,9 @@ class SlashUmServer
     `/um go [place]`
       Declare an interest in going to a place to eat.
       example: /um Rustico
+    `/um ungo [place]`
+      Regret the interest in going to a place.
+      example /um ungo Rustico
     `/um list`
       Show where people want to go.
       example: /um list
