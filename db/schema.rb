@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160207160128) do
+ActiveRecord::Schema.define(version: 20160313155833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,8 @@ ActiveRecord::Schema.define(version: 20160207160128) do
   create_table "pinned_messages", force: :cascade do |t|
     t.string "message_id"
     t.date   "message_date"
+    t.string "team_id"
+    t.string "channel_id"
   end
 
   create_table "restaurants", force: :cascade do |t|

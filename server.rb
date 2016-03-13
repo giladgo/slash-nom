@@ -24,11 +24,6 @@ class SlashUmServer
     @user_info['user_id']
   end
 
-  def todays_pinned_message(channel_id)
-    # TODO this needs to be by channel_id
-    PinnedMessage.for_today.first
-  end
-
   def declaration_lines(team_id, channel_id)
     Restaurant.joins(:declarations).merge(Declaration.in_channel(team_id, channel_id)).merge(Declaration.for_today).group("restaurants.id").order("count(declarations.restaurant_id) desc").map do |rest|
       users = rest.declarations.for_today.in_channel(team_id, channel_id).map(&:user_name)
@@ -41,14 +36,14 @@ class SlashUmServer
   end
 
   def set_pinned_message(team_id, channel_id)
-    pinned_msg = todays_pinned_message(channel_id)
+    pinned_msg = PinnedMessage.todays(team_id, channel_id)
     if pinned_msg.present?
       @slack_client.chat_update(ts: pinned_msg.message_id, channel: channel_id, text: pinned_message_text(team_id, channel_id))
       false
     else
       response = @slack_client.chat_postMessage(channel: channel_id, text: pinned_message_text(team_id, channel_id), as_user: true)
       PinnedMessage.last_pinned.unpin!(@slack_client)
-      PinnedMessage.create(message_date: Date.today, message_id: response["ts"]).pin!(@slack_client)
+      PinnedMessage.create(message_date: Date.today, message_id: response["ts"], team_id: team_id, channel_id: channel_id).pin!(@slack_client)
       true
     end
   end
