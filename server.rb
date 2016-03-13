@@ -47,8 +47,8 @@ class SlashUmServer
       false
     else
       response = @slack_client.chat_postMessage(channel: channel_id, text: pinned_message_text(team_id, channel_id), as_user: true)
-      @slack_client.pins_add(channel: channel_id, timestamp: response["ts"])
-      PinnedMessage.create(message_date: Date.today, message_id: response["ts"])
+      PinnedMessage.last_pinned.unpin!(@slack_client)
+      PinnedMessage.create(message_date: Date.today, message_id: response["ts"]).pin!(@slack_client)
       true
     end
   end
