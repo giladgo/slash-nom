@@ -9,7 +9,7 @@ class SlashUmServer
       decl.save!
       if set_pinned_message(params['team_id'], params['channel_id'])
         # new message
-        respond_in_channel "@here, #{params['user_name']} wants to go to #{decl.restaurant.display_name}! Join them by typing `/um go <place>.`"
+        @slack_client.chat_postMessage(channel: params['channel_id'], text: "@here, #{params['user_name']} wants to go to #{decl.restaurant.display_name}! Join them by typing `/um go <place>.`", as_user: true)
       else
         respond "You want to go to #{decl.restaurant.display_name}!"
       end
