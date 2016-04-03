@@ -25,7 +25,7 @@ class SlashUmServer
   end
 
   def in_channel?(channel_id)
-    channels = @slack_client.channels_list(exclude_archived: 1).channels
+    channels = @slack_client.channels_list(exclude_archived: 1)['channels']
     channels.any? { |channel| channel.is_member && channel.id == channel_id }
   end
 
