@@ -24,6 +24,11 @@ class SlashUmServer
     @user_info['user_id']
   end
 
+  def in_channel?(channel_id)
+    channels = @slack_client.channels_list(exclude_archived: 1).channels
+    channels.any? { |channel| channel.is_member && channel.id == channel_id }
+  end
+
   def declaration_lines(team_id, channel_id)
     Restaurant.joins(:declarations).merge(Declaration.in_channel(team_id, channel_id)).merge(Declaration.for_today).group("restaurants.id").order("count(declarations.restaurant_id) desc").map do |rest|
       users = rest.declarations.for_today.in_channel(team_id, channel_id).map(&:user_name)
