@@ -1,4 +1,4 @@
-class SlashUmServer
+class SlashNomServer
 
   def help
     respond help_text
@@ -6,23 +6,23 @@ class SlashUmServer
 
 	def help_text
 	<<-HELP
-	`/um` is a slash command to help people decide where to go to lunch.
+	`/nom` is a slash command to help people decide where to go to lunch.
 		Here are the available commands:
-		`/um go [place]`
+		`/nom go [place]`
 			Declare an interest in going to a place to eat.
-			example: /um Rustico
-		`/um ungo [place]`
+			example: /nom Rustico
+		`/nom ungo [place]`
 			Regret the interest in going to a place.
-			example /um ungo Rustico
-		`/um list`
+			example /nom ungo Rustico
+		`/nom list`
 			Show where people want to go.
-			example: /um list
-		`/um emoji [emoji] [place]`
+			example: /nom list
+		`/nom emoji [emoji] [place]`
 			Associate a place with an emoji.
-			example: /um emoji :hamburger: McDonalds
-		`/um help`
+			example: /nom emoji :hamburger: McDonalds
+		`/nom help`
 			Show this help message.
-			example: /um help
+			example: /nom help
 	Enjoy!
 	HELP
 	end

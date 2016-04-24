@@ -1,4 +1,4 @@
-class SlashUmServer
+class SlashNomServer
 
   def emoji(args, params)
     ap args
@@ -9,5 +9,5 @@ class SlashUmServer
 
     respond "#{rest.name.titleize}'s emoji is now #{rest.emoji}!"
   end
-	
+
 end

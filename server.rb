@@ -8,7 +8,7 @@ require './models/pinned_message'
 require './commands/commands.rb'
 
 
-class SlashUmServer
+class SlashNomServer
 
   Slack.configure do |config|
     config.token = ENV['SLACK_API_TOKEN']

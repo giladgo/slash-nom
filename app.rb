@@ -9,9 +9,9 @@ set :server, "thin"
 after do
   ActiveRecord::Base.connection.close
 end
-server = SlashUmServer.new
+server = SlashNomServer.new
 
-post '/um' do
+post '/nom' do
   content_type :json
   if params['text'].present?
     args = params['text'].split(' ', 2)

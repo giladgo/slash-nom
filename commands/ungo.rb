@@ -1,4 +1,4 @@
-class SlashUmServer
+class SlashNomServer
 
   def ungo(rest, params)
     if not in_channel?(params['channel_id'])
