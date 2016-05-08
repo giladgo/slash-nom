@@ -5,12 +5,6 @@ require 'awesome_print'
 set :bind, '127.0.0.1'
 set :server, "thin"
 
-Slack.configure do |config|
-  logger = ::Logger.new(STDOUT)
-  logger.level = ::Logger::DEBUG
-  config.logger = logger
-end
-
 # prevent conneciton leaks
 after do
   ActiveRecord::Base.connection.close
