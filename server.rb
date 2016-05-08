@@ -52,7 +52,7 @@ class SlashNomServer
     else
       response = @slack_client.chat_postMessage(channel: channel_id, text: pinned_message_text(team_id, channel_id), as_user: true)
       PinnedMessage.last_pinned.try(:unpin!, @slack_client)
-      PinnedMessage.create(message_date: Date.today, message_id: response["ts"], team_id: team_id, channel_id: channel_id).pin!(@slack_client, params['slack_bot_token'])
+      PinnedMessage.create(message_date: Date.today, message_id: response["ts"], team_id: team_id, channel_id: channel_id).pin!(@slack_client)
       true
     end
   end
