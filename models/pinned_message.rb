@@ -10,7 +10,7 @@ class PinnedMessage < ActiveRecord::Base
   def pin!(sc)
     begin
       sc.pins_add(channel: channel_id, timestamp: message_id)
-    rescue Slack::Web::Api::Error =>
+    rescue Slack::Web::Api::Error => e
       raise e unless e.message == 'already_pinned'
     end
   end
@@ -18,7 +18,7 @@ class PinnedMessage < ActiveRecord::Base
   def unpin!(sc)
     begin
       sc.pins_remove(channel: channel_id, timestamp: message_id)
-    rescue Slack::Web::Api::Error =>
+    rescue Slack::Web::Api::Error => e
       raise e unless e.message == 'not_pinned'
     end
   end
