@@ -1,4 +1,4 @@
-class SlashNomServer
+class SlashNomServer < Sinatra::Base
 
   def help
     respond help_text

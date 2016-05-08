@@ -1,4 +1,4 @@
-class SlashNomServer
+class SlashNomServer < Sinatra::Base
 
   def emoji(args, params)
     ap args

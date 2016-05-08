@@ -9,7 +9,7 @@ require './models/team'
 require './commands/commands.rb'
 
 
-class SlashNomServer
+class SlashNomServer < Sinatra::Base
 
   before do
     request.slack_bot_token = Team.get_slack_bot_token(params['team_id'])
