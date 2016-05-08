@@ -14,4 +14,8 @@ class Team < ActiveRecord::Base
                    team_id: resp['team_id'])
     end
 	end
+
+	def self.get_slack_bot_token(team_id)
+		self.find_by(team_id: team_id).bot_access_token
+	end
 end

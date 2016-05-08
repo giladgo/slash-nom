@@ -7,16 +7,16 @@ class PinnedMessage < ActiveRecord::Base
     self.order('message_id DESC').first
   end
 
-  def pin!(sc)
+  def pin!(sc, token)
     sc.pins_add(channel: channel_id, timestamp: message_id)
   end
 
-  def unpin!(sc)
+  def unpin!(sc, token)
     sc.pins_remove(channel: channel_id, timestamp: message_id) if slack_pinned?(sc)
   end
 
-  def slack_pinned?(sc)
-    sc.pins_list(channel: channel_id)["items"].any? do |pin|
+  def slack_pinned?(sc, token)
+    sc.pins_list(token: token, channel: channel_id)["items"].any? do |pin|
       pin["message"]["ts"] == message_id
     end
   end
