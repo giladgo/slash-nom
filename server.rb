@@ -20,7 +20,9 @@ class SlashNomServer
   end
 
   def in_channel?(channel_id, token)
-    channels = @slack_client.channels_list(token: token, exclude_archived: 1)['channels']
+    puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", token
+    @slack_client.token = token
+    channels = @slack_client.channels_list(exclude_archived: 1)['channels']
     channels.any? { |channel| channel['is_member'] == true && channel['id'] == channel_id }
   end
 
@@ -37,12 +39,13 @@ class SlashNomServer
 
   def set_pinned_message(team_id, channel_id, token)
     pinned_msg = PinnedMessage.todays(team_id, channel_id)
+    @slack_client.token = token
     if pinned_msg.present?
-      @slack_client.chat_update(token: params['slack_bot_token'], ts: pinned_msg.message_id, channel: channel_id, text: pinned_message_text(team_id, channel_id))
+      @slack_client.chat_update(ts: pinned_msg.message_id, channel: channel_id, text: pinned_message_text(team_id, channel_id))
       false
     else
-      response = @slack_client.chat_postMessage(token: params['slack_bot_token'], channel: channel_id, text: pinned_message_text(team_id, channel_id), as_user: true)
-      PinnedMessage.last_pinned.unpin!(@slack_client, params['slack_bot_token'])
+      response = @slack_client.chat_postMessage(, channel: channel_id, text: pinned_message_text(team_id, channel_id), as_user: true)
+      PinnedMessage.last_pinned.unpin!(@slack_client)
       PinnedMessage.create(message_date: Date.today, message_id: response["ts"], team_id: team_id, channel_id: channel_id).pin!(@slack_client, params['slack_bot_token'])
       true
     end

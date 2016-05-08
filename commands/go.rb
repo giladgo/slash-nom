@@ -1,7 +1,6 @@
 class SlashNomServer
 
   def go(rest, params)
-    puts '############################', params['slack_bot_token']
     if not in_channel?(params['channel_id'], params['slack_bot_token'])
       respond "Please call me from a channel I've been invited to."
     else
