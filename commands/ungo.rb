@@ -2,7 +2,7 @@ class SlashNomServer
 
   def ungo(rest, params)
     if not in_channel?(params['channel_id'], params['slack_bot_token'])
-      respond "Please call me from a channel i've been invited to."
+      respond "Please call me from a channel or group I've been invited to."
     else
       decl = Restaurant.in_team(params['team_id']).by_input(rest).declaration_for_user(params['user_id'], params['channel_id'])
 
