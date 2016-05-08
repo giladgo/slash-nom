@@ -19,8 +19,8 @@ class SlashNomServer
     @user_info['user_id']
   end
 
-  def in_channel?(channel_id)
-    channels = @slack_client.channels_list(token: params['slack_bot_token'], exclude_archived: 1)['channels']
+  def in_channel?(channel_id, token)
+    channels = @slack_client.channels_list(token: token, exclude_archived: 1)['channels']
     channels.any? { |channel| channel['is_member'] == true && channel['id'] == channel_id }
   end
 
@@ -35,7 +35,7 @@ class SlashNomServer
     declaration_lines(team_id, channel_id).join("\n")
   end
 
-  def set_pinned_message(team_id, channel_id)
+  def set_pinned_message(team_id, channel_id, token)
     pinned_msg = PinnedMessage.todays(team_id, channel_id)
     if pinned_msg.present?
       @slack_client.chat_update(token: params['slack_bot_token'], ts: pinned_msg.message_id, channel: channel_id, text: pinned_message_text(team_id, channel_id))
