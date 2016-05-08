@@ -27,4 +27,9 @@ post '/nom' do
     ''
   end
 
+
+get '/oauth' do
+  server.oauth(params)
+end
+
 end

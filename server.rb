@@ -4,20 +4,15 @@ require 'sinatra/activerecord'
 require './models/restaurant'
 require './models/declaration'
 require './models/pinned_message'
+require './models/team'
 
 require './commands/commands.rb'
 
 
 class SlashNomServer
 
-  Slack.configure do |config|
-    config.token = ENV['SLACK_API_TOKEN']
-  end
-
   def initialize
     @slack_client = Slack::Web::Client.new
-    puts 'Authenticating with slack'
-    @user_info = @slack_client.auth_test
   end
 
   def bot_user_id
@@ -61,5 +56,15 @@ class SlashNomServer
     {response_type: 'in_channel', text: text}
   end
 
+
+  def oauth(params)
+    resp = @slack_client.oauth_access(client_id: ENV['SLACK_CLIENT_ID'],
+                                      client_secret: ENV['SLACK_CLIENT_SECRET'],
+                                      code: params['code'],
+                                      redirect_uri: params['redirect_uri'])
+
+    Team.create_or_update_from_oauth(resp)
+
+  end
 
 end

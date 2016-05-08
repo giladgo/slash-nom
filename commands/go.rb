@@ -2,7 +2,7 @@ class SlashNomServer
 
   def go(rest, params)
     if not in_channel?(params['channel_id'])
-      respond "Please call me from a channel i've been invited to."
+      respond "Please call me from a channel I've been invited to."
     else
       # Add a declaration
       decl = Restaurant.in_team(params['team_id']).by_input(rest).init_declaration(params['user_id'],
