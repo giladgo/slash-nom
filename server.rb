@@ -44,7 +44,7 @@ class SlashNomServer
       @slack_client.chat_update(ts: pinned_msg.message_id, channel: channel_id, text: pinned_message_text(team_id, channel_id))
       false
     else
-      response = @slack_client.chat_postMessage(, channel: channel_id, text: pinned_message_text(team_id, channel_id), as_user: true)
+      response = @slack_client.chat_postMessage(channel: channel_id, text: pinned_message_text(team_id, channel_id), as_user: true)
       PinnedMessage.last_pinned.unpin!(@slack_client)
       PinnedMessage.create(message_date: Date.today, message_id: response["ts"], team_id: team_id, channel_id: channel_id).pin!(@slack_client, params['slack_bot_token'])
       true
