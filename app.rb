@@ -26,10 +26,9 @@ post '/nom' do
   else
     ''
   end
+end
 
 
 get '/oauth' do
   server.oauth(params)
-end
-
 end
