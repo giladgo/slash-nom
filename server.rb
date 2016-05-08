@@ -48,6 +48,7 @@ class SlashNomServer
     @slack_client.token = token
     if pinned_msg.present?
       @slack_client.chat_update(ts: pinned_msg.message_id, channel: channel_id, text: pinned_message_text(team_id, channel_id))
+      pinned_msg.pin!(@slack_client)
       false
     else
       response = @slack_client.chat_postMessage(channel: channel_id, text: pinned_message_text(team_id, channel_id), as_user: true)

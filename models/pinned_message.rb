@@ -8,7 +8,7 @@ class PinnedMessage < ActiveRecord::Base
   end
 
   def pin!(sc)
-    sc.pins_add(channel: channel_id, timestamp: message_id)
+    sc.pins_add(channel: channel_id, timestamp: message_id) unless slack_pinned?(sc)
   end
 
   def unpin!(sc)
