@@ -20,7 +20,7 @@ class SlashNomServer
   end
 
   def in_channel?(channel_id, token)
-    @slack_client.token = tokens
+    @slack_client.token = token
     if channel_id.start_with?("G")
       groups = @slack_client.groups_list(exclude_archived: 1)['groups']
       groups.any? { |group| group['id'] == channel_id }
