@@ -1,4 +1,4 @@
-class SlashNomServer < Sinatra::Base
+class SlashNomServer
 
   def go(rest, params)
     if not in_channel?(params['channel_id'])

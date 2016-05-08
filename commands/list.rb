@@ -1,4 +1,4 @@
-class SlashNomServer < Sinatra::Base
+class SlashNomServer
 
   def list(rest, params)
     lines = declaration_lines(params['team_id'], params['channel_id'])
