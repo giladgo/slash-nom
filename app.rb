@@ -12,7 +12,9 @@ end
 server = SlashNomServer.new
 
 before do
-  params['slack_bot_token'] = Team.get_slack_bot_token(params['team_id'])
+  if params['team_id'].present?
+    params['slack_bot_token'] = Team.get_slack_bot_token(params['team_id'])
+  end
 end
 
 post '/nom' do
@@ -32,7 +34,10 @@ post '/nom' do
   end
 end
 
-
 get '/oauth' do
   server.oauth(params)
+end
+
+get '/' do
+  haml :landing
 end

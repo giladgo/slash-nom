@@ -1,0 +1,89 @@
+* {
+	box-sizing: border-box;
+}
+body {
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+	background-color: #fff;
+	font-family: 'Open Sans', Arial, sans-serif;
+}
+
+header {
+	background-color: #457B9D;
+	text-align: center;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	border-bottom: solid 1px #1D3557;
+	color: #F1FAEE;
+}
+
+header h1 {
+	font-size: 100px;
+	margin: 35px 0;
+}
+
+header h1 .food-item {
+	margin: 0 10px;
+}
+
+header h2 {
+	margin: 0;
+	font-family: monospace;
+	font-size: 100px;
+	font-weight: 100;
+}
+
+header h3 {
+	font-size: 35px;
+	font-weight: 300;
+	margin: 0 0 36px 0;
+	font-style: italic;
+	font-family: 'Open Sans', Arial, sans-serif;
+}
+
+section.manual {
+	max-width: 1000px;
+	padding: 30px;
+	margin: 0 auto;
+}
+
+section.manual h2 {
+	font-weight: 600;
+	font-size: 25px;
+	color: #E63946;
+}
+
+section.manual h3 {
+	font-weight: 400;
+	font-size: 18px;
+	color: #333;
+}
+
+section.manual p.message {
+	margin-bottom: 1.5rem;
+  padding: 0.7rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+	background-color: #fff;
+}
+
+p.bottom_button {
+	text-align: center;
+}
+
+footer {
+	background-color: #F1FAEE;
+	margin-top: 25px;
+	text-align: center;
+	padding: 20px 0 30px;
+	color: #333;
+}
+
+footer a, a:active, a:visited {
+	color: #333;
+}
+
+footer p.credit {
+	font-size: 0.75em;
+}
