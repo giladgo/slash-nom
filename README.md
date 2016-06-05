@@ -1,2 +1,2 @@
 # slash-nom
-## Slack lunch organizer
+Slack lunch organizer
