@@ -41,3 +41,11 @@ end
 get '/' do
   haml :landing
 end
+
+get '/privacy' do
+	haml :privacy
+end
+
+get '/contact' do
+	haml :contact
+end

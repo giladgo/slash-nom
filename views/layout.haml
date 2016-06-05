@@ -1,0 +1,30 @@
+!!!
+%html
+	%head
+		%title /nom
+		%link(rel="stylesheet" href="css/style.css")
+		%link(href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,600" rel="stylesheet" type="text/css")
+	%body
+		%header
+			%h2 /nom
+			%h3 Where do you want to eat today?
+			%h1
+				%span.food-item 🍪
+				%span.food-item 🍔
+				%span.food-item 🍟
+				%span.food-item 🌮
+			= haml :slack_button
+
+		= yield
+
+%footer
+	%p
+		Read the docs on
+		%a(href="https://github.com/giladgo/slash-nom") GitHub
+		|
+		%a(href="/privacy") Privacy Policy
+		|
+		%a(href="/contact") Contact
+	%p.credit
+		Built by
+		%a(href="https://twitter.com/giladgo") @giladgo

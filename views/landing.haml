@@ -1,48 +1,19 @@
-!!!
-%html
-	%head
-		%title /nom
-		%link(rel="stylesheet" href="css/style.css")
-		%link(href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,600" rel="stylesheet" type="text/css")
-	%body
-		%header
-			%h2 /nom
-			%h3 Where do you want to eat today?
-			%h1
-				%span.food-item 🍪
-				%span.food-item 🍔
-				%span.food-item 🍟
-				%span.food-item 🌮
-			= haml :slack_button
+%section.manual
+	%h2 Let your friends know where you want to go:
+	%p.message /nom go Rustico
+	%img(src="/images/go.png")
 
-		%section.manual
-			%h2 Let your friends know where you want to go:
-			%p.message /nom go Rustico
-			%img(src="/images/go.png")
+	%h2 Your friends can join you...
+	%p.message /nom go Rustico
+	%img(src="/images/join.png")
 
-			%h2 Your friends can join you...
-			%p.message /nom go Rustico
-			%img(src="/images/join.png")
+	%h2 ...or show an interest in a different place.
+	%p.message /nom go Rozinka
+	%img(src="/images/different.png")
 
-			%h2 ...or show an interest in a different place.
-			%p.message /nom go Rozinka
-			%img(src="/images/different.png")
+	%h2 When it's time to decide, look at the list.
+	%h3 The list is saved as a pinned message, so you can quickly find it in the sidebar.
+	%img(src="/images/pinned.png")
 
-			%h2 When it's time to decide, look at the list.
-			%h3 The list is saved as a pinned message, so you can quickly find it in the sidebar.
-			%img(src="/images/pinned.png")
-
-			%p.bottom_button
-				= haml :slack_button
-
-		%footer
-			%p
-				Read the docs on
-				%a(href="https://github.com/giladgo/slash-nom") GitHub
-				|
-				%a(href="/privacy") Privacy Policy
-				|
-				%a(href="/privacy") Contact
-			%p.credit
-				Built by
-				%a(href="https://twitter.com/giladgo") @giladgo
+	%p.bottom_button
+		= haml :slack_button
