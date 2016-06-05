@@ -26,5 +26,5 @@ Associate a place with an emoji. <br/>
 example: `/nom emoji :hamburger: McDonalds`
 
 ### `/nom help`
-Show this help message. <br/>
+Show the help message. <br/>
 example: `/nom help`
