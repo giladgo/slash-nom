@@ -7,6 +7,8 @@ class SlashNomServer
     rest.emoji = args[0]
     rest.save!
 
+    set_pinned_message(params['team_id'], params['channel_id'], params['slack_bot_token'])
+
     respond "#{rest.name.titleize}'s emoji is now #{rest.emoji}!"
   end
 

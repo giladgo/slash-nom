@@ -8,16 +8,18 @@ class PinnedMessage < ActiveRecord::Base
   end
 
   def pin!(sc)
-    sc.pins_add(channel: channel_id, timestamp: message_id)
+    begin
+      sc.pins_add(channel: channel_id, timestamp: message_id)
+    rescue Slack::Web::Api::Error => e
+      raise e unless e.message == 'already_pinned'
+    end
   end
 
   def unpin!(sc)
-    sc.pins_remove(channel: channel_id, timestamp: message_id) if slack_pinned?(sc)
-  end
-
-  def slack_pinned?(sc)
-    sc.pins_list(channel: channel_id)["items"].any? do |pin|
-      pin["message"]["ts"] == message_id
+    begin
+      sc.pins_remove(channel: channel_id, timestamp: message_id)
+    rescue Slack::Web::Api::Error => e
+      raise e unless e.message == 'not_pinned'
     end
   end
 

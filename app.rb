@@ -11,6 +11,12 @@ after do
 end
 server = SlashNomServer.new
 
+before do
+  if params['team_id'].present?
+    params['slack_bot_token'] = Team.get_slack_bot_token(params['team_id'])
+  end
+end
+
 post '/nom' do
   content_type :json
   if params['text'].present?
@@ -26,5 +32,20 @@ post '/nom' do
   else
     ''
   end
+end
 
+get '/oauth' do
+  server.oauth(params)
+end
+
+get '/' do
+  haml :landing
+end
+
+get '/privacy' do
+	haml :privacy
+end
+
+get '/contact' do
+	haml :contact
 end
