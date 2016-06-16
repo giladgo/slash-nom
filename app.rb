@@ -36,6 +36,7 @@ end
 
 get '/oauth' do
   server.oauth(params)
+  redirect to('/thanks')
 end
 
 get '/' do
@@ -48,4 +49,8 @@ end
 
 get '/contact' do
 	haml :contact
+end
+
+get '/thanks' do
+	haml :thanks, layout: false
 end

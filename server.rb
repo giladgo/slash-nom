@@ -73,8 +73,6 @@ class SlashNomServer
                                       code: params['code'],
                                       redirect_uri: params['redirect_uri'])
 
-    puts resp
-
     Team.create_or_update_from_oauth(resp)
 
   end
