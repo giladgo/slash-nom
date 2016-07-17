@@ -12,7 +12,7 @@ class SlashNomServer
         decl.save!
         if set_pinned_message(params['team_id'], params['channel_id'], params['slack_bot_token'])
           # new message
-          respond_in_channel "<!here>, #{params['user_name']} wants to go to #{decl.restaurant.display_name}! Join them by typing `/nom go <place>.`"
+          respond_in_channel "#{params['user_name']} wants to go to #{decl.restaurant.display_name}! Join them by typing `/nom go <place>.`"
         else
           respond "You want to go to #{decl.restaurant.display_name}!"
         end

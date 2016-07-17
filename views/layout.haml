@@ -6,16 +6,16 @@
 		%link(href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,600" rel="stylesheet" type="text/css")
 	%body
 		%header
-			%h2 /nom
-			%h3 Where do you want to eat today?
+			= yield_content :header
 			%h1
-				%span.food-item 🍪
-				%span.food-item 🍔
-				%span.food-item 🍟
-				%span.food-item 🌮
+				.food-items
+					.food-item.cookie 🍪
+					.food-item.burger 🍔
+					.food-item.fries 🍟
+					.food-item.taco 🌮
 			= haml :slack_button
 
-		= yield
+		= yield_content :contents
 
 %footer
 	%p

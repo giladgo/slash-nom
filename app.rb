@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'sinatra/content_for'
 require './server'
 require 'awesome_print'
 
@@ -52,5 +53,5 @@ get '/contact' do
 end
 
 get '/thanks' do
-	haml :thanks, layout: false
+	haml :thanks
 end

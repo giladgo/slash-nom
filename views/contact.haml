@@ -1,10 +1,13 @@
-%section
-	%h1 Contact
+- content_for :header do
+	= haml :_common_header
+- content_for :contents do
+	%section
+		%h1 Contact
 
-	%p We're here to hear whatever you want to say about /nom!
-	%p
-		Contact
-		%a(href="https://twitter.com/giladgo") @giladgo
-		on twitter, or e-mail him,&nbsp;
-		%a(href="mailto:gilado@gmail.com")> here
-		\.
+		%p We're here to hear whatever you want to say about /nom!
+		%p
+			Contact
+			%a(href="https://twitter.com/giladgo") @giladgo
+			on twitter, or e-mail him,&nbsp;
+			%a(href="mailto:gilado@gmail.com")> here
+			\.

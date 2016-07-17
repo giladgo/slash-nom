@@ -23,9 +23,57 @@ header h1 {
 	margin: 35px 0;
 }
 
+@-webkit-keyframes food-anim {
+	0% {
+		opacity: 0;
+		transform: translateX(100px);
+	}
+
+	11% {
+		opacity: 1;
+		transform: translateX(0px);
+	}
+
+	22% {
+		opacity: 1;
+		transform: translateX(0px);
+
+	}
+
+	33% {
+		opacity: 0;
+		transform: translateX(-100px);
+	}
+
+	100% {
+		opacity: 0;
+		transform: translateX(-100px);
+	}
+}
+
+header h1 .food-items {
+	width: 100px;
+	position: relative;
+	height: 138px;
+	margin: 0 auto;
+}
+
 header h1 .food-item {
 	margin: 0 10px;
+	display: inline-block;
+	width: 100px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	transform: translateX(100px);
+	animation: 12s ease-out infinite food-anim;
 }
+
+header h1 .food-item.cookie { animation-delay: 0s; }
+header h1 .food-item.burger { animation-delay: 3s; }
+header h1 .food-item.fries  { animation-delay: 6s; }
+header h1 .food-item.taco   { animation-delay: 9s; }
 
 header h2 {
 	margin: 0;

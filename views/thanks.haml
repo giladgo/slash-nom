@@ -1,39 +1,7 @@
-!!!
-%html
-	%head
-		%title /nom
-		%link(rel="stylesheet" href="css/style.css")
-		%link(href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,600" rel="stylesheet" type="text/css")
-	%body
-		%header
-			%h2 Thanks!
+- content_for :header do
+	%h2 Thanks!
 
-			%h1
-				%span.food-item 🍪
-				%span.food-item 🍔
-				%span.food-item 🍟
-				%span.food-item 🌮
-
-		%section
-			%h1 Now go use it in Slack...
-			%a(href="https://github.com/giladgo/slash-nom/") Read How
-
-%footer
-	%p
-		Read the docs on
-		%a(href="https://github.com/giladgo/slash-nom") GitHub
-		|
-		%a(href="/privacy") Privacy Policy
-		|
-		%a(href="/contact") Contact
-	%p.credit
-		Built by
-		%a(href="https://twitter.com/giladgo") @giladgo
-:javascript
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-	ga('create', 'UA-79494746-1', 'auto');
-	ga('send', 'pageview');
+- content_for :contents do
+	%section
+		%h1 Now go use it in Slack...
+		%a(href="/") Read How
